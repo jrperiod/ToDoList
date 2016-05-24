@@ -1,10 +1,11 @@
 package com.vitalgroundz.todolist;
 
+import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,17 +15,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.vitalgroundz.todolist.data.Task;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.vitalgroundz.todolist.data.Task;
 
 import java.util.ArrayList;
 
+/**
+ * A placeholder fragment containing a simple view.
+ */
 public class TaskListFragment extends Fragment {
 
     public static final String FIRE_BASE_URL = "https://blistering-heat-8433.firebaseio.com/";
+
+
+    private OnTaskListFragmentListener mCallback;
 
     private Firebase myFirebaseRef;
     private RecyclerView recyclerView;
@@ -33,6 +40,24 @@ public class TaskListFragment extends Fragment {
 
     public TaskListFragment() {
 
+    }
+
+    // Container Activity must implement this interface
+    public interface OnTaskListFragmentListener {
+        void onTaskSelected(Task task);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            mCallback = (OnTaskListFragmentListener) getActivity();
+            TaskAdapter.ViewHolder.setOnTaskListFragmentListner(mCallback);
+        } catch (ClassCastException e) {
+            throw new ClassCastException(getActivity().toString()
+                    + " must implement OnTaskListFragmentlistener");
+        }
     }
 
     @Override
@@ -49,7 +74,7 @@ public class TaskListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View layout =  inflater.inflate(R.layout.fragment_main, container, false);
 
-        recyclerView = (RecyclerView) layout.findViewById(R.id.toDoListRecylclerView);
+        recyclerView = (RecyclerView) layout.findViewById(R.id.toDoListRecyclerView);
 
         fab = (FloatingActionButton) layout.findViewById(R.id.fab);
 
@@ -80,7 +105,13 @@ public class TaskListFragment extends Fragment {
     }
 
     private void saveTask(Task task) {
-        myFirebaseRef.push().setValue(task);
+//        Previously written save
+//        myFirebaseRef.push().setValue(task);
+
+        Firebase newRef = myFirebaseRef.push();
+        String taskId = newRef.getKey();
+        task.setTaskId(taskId);
+        newRef.setValue(task);
     }
 
     private void addTask() {
