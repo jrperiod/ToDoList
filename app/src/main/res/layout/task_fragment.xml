@@ -15,11 +15,11 @@
         android:id="@+id/task_fullDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Task"/>
+        android:text="Enter Task Here"/>
 
     <Button
         android:id="@+id/save_frag_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SAVE"/>
+        android:text="SAVE YOUR TASK"/>
 </LinearLayout>
