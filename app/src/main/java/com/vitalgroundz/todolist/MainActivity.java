@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity implements TaskListFragment.
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public void onTaskSelected(Task task) {
         replaceFragment(TaskFragment.newInstance(task));

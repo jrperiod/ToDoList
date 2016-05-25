@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by bryan on 5/17/16.
+ * Created by jrperiod on 5/23/16.
  */
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder>{
 
@@ -59,7 +59,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder>{
             }
         }
     }
-
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

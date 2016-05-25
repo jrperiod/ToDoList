@@ -28,7 +28,7 @@ import java.util.ArrayList;
  */
 public class TaskListFragment extends Fragment {
 
-    public static final String FIRE_BASE_URL = "https://blistering-heat-8433.firebaseio.com/";
+    public static final String FIRE_BASE_URL = "https://glowing-inferno-1575.firebaseio.com//";
 
 
     private OnTaskListFragmentListener mCallback;
