@@ -7,30 +7,32 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.vitalgroundz.todolist.R;
-import com.vitalgroundz.todolist.TaskAdapter;
+import com.vitalgroundz.todolist.TaskListFragment;
 import com.vitalgroundz.todolist.data.Task;
+import com.firebase.client.Firebase;
 
-
-public class TaskFragment extends Fragment implements View.OnClickListener{
+/**
+ * Created by bryan on 5/19/16.
+ */
+public class TaskFragment extends Fragment {
 
     public static final String TASK_KEY = "task_key";
 
+    private Firebase myFirebaseRef;
     private EditText taskDescription;
-    private Button saveFragButton;
     private OnTaskFragmentListener mCallback;
-
     private Task task;
+
+
 
     public interface OnTaskFragmentListener {
 
         void onTaskUpdated(Task task);
-    }
 
+    }
     public static TaskFragment newInstance(Task task) {
         TaskFragment fragment = new TaskFragment();
 
@@ -39,6 +41,13 @@ public class TaskFragment extends Fragment implements View.OnClickListener{
         fragment.setArguments(args);
 
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Firebase.setAndroidContext(getActivity());
+        myFirebaseRef = new Firebase(TaskListFragment.FIRE_BASE_URL + Task.TASKS_ROUTE);
     }
 
     @Override
@@ -55,10 +64,7 @@ public class TaskFragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.task_fragment, container, false);
-
         taskDescription = (EditText) view.findViewById(R.id.task_fullDescription);
-        saveFragButton = (Button) view.findViewById(R.id.save_frag_btn);
-        saveFragButton.setOnClickListener(this);
 
         return view;
     }
@@ -76,16 +82,18 @@ public class TaskFragment extends Fragment implements View.OnClickListener{
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.save_frag_btn:
-                task.setTask(taskDescription.getEditableText().toString());
-                if(mCallback != null) {
-                    mCallback.onTaskUpdated(task);
-                }
-                break;
+    public void onPause() {
+        super.onPause();
+
+        if(task == null || mCallback == null)  {
+            return;
         }
+
+        task.setTask(taskDescription.getEditableText().toString());
+        mCallback.onTaskUpdated(task);
     }
+
+
 
 
 }
