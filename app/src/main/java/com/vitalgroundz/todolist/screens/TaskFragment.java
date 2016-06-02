@@ -15,7 +15,7 @@ import com.vitalgroundz.todolist.data.Task;
 import com.firebase.client.Firebase;
 
 /**
- * Created by bryan on 5/19/16.
+ * Created by jrperiod on 5/19/16.
  */
 public class TaskFragment extends Fragment {
 
@@ -23,6 +23,7 @@ public class TaskFragment extends Fragment {
 
     private Firebase myFirebaseRef;
     private EditText taskDescription;
+    private EditText titleName;
     private OnTaskFragmentListener mCallback;
     private Task task;
 
@@ -57,6 +58,7 @@ public class TaskFragment extends Fragment {
         if(getArguments() != null) {
             task = (Task) getArguments().getParcelable(TASK_KEY);
             taskDescription.setText(task.getTask());
+            titleName.setText(task.getTaskTitle());
         }
     }
 
@@ -65,6 +67,7 @@ public class TaskFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.task_fragment, container, false);
         taskDescription = (EditText) view.findViewById(R.id.task_fullDescription);
+        titleName = (EditText) view.findViewById(R.id.taskName);
 
         return view;
     }
@@ -90,6 +93,7 @@ public class TaskFragment extends Fragment {
         }
 
         task.setTask(taskDescription.getEditableText().toString());
+        task.setTaskTitle(titleName.getEditableText().toString());
         mCallback.onTaskUpdated(task);
     }
 

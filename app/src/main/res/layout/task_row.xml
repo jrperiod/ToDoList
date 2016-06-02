@@ -3,14 +3,17 @@
     android:id="@+id/taskRowLayout"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
+    android:layout_height="60sp">
 
     <TextView
         android:id="@+id/taskName"
+        android:paddingLeft="8dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="25dp"
-        android:gravity="center"/>
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"/>
 
 </LinearLayout>
