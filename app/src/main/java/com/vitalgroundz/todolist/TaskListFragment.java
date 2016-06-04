@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.vitalgroundz.todolist.data.Task;
@@ -36,7 +37,7 @@ public class TaskListFragment extends Fragment {
     private Firebase myFirebaseRef;
     private RecyclerView recyclerView;
     private TaskAdapter adapter;
-    private FloatingActionButton fab;
+    private Button fab;
 
     public TaskListFragment() {
 
@@ -76,7 +77,7 @@ public class TaskListFragment extends Fragment {
 
         recyclerView = (RecyclerView) layout.findViewById(R.id.toDoListRecyclerView);
 
-        fab = (FloatingActionButton) layout.findViewById(R.id.fab);
+        fab = (Button) layout.findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
